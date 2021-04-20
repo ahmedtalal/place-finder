@@ -1,0 +1,6 @@
+package com.example.online_booking_places
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
