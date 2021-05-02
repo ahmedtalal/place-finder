@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TargetModel {
-  String name, id, description, locationDetails, location, image;
+  String name, id, description, locationDetails, location, image, phone;
   double price, rating;
   int numOfRoomes;
   List<String> reservationList;
@@ -17,6 +17,7 @@ class TargetModel {
     @required this.price,
     @required this.rating,
     @required this.reservationList,
+    @required this.phone,
   });
 
   TargetModel.fromJson(Map<String, dynamic> data) {
@@ -30,6 +31,7 @@ class TargetModel {
     this.price = data["price"];
     this.rating = data["rating"];
     this.reservationList = data["reservationList"];
+    this.phone = data["phone"];
   }
 
   static Map<String, dynamic> toJson(TargetModel model) => {
@@ -43,5 +45,6 @@ class TargetModel {
         "price": model.price,
         "rating": model.rating,
         "reservationList": model.reservationList,
+        "phone": model.phone,
       };
 }

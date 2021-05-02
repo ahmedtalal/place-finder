@@ -1,4 +1,4 @@
-abstract class RepositoryAuthModel {
+abstract class AuthRepoModel {
   dynamic login(var model);
   dynamic register(var model);
   dynamic logOut();
