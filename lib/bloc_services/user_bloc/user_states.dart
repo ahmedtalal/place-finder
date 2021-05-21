@@ -13,6 +13,15 @@ class UserLoadedState extends UserStates {
   });
 }
 
-class UserErrorState extends UserStates {}
+class UserErrorState extends UserStates {
+  var error;
+  UserErrorState({
+    @required this.error,
+  });
+}
 
 class UserUpdatedState extends UserStates {}
+
+class UpdatingSuccessedState extends UserStates {}
+
+class UpdatingFailedState extends UserStates {}

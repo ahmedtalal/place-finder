@@ -6,9 +6,19 @@ class UserModel {
   UserModel({
     @required this.name,
     @required this.email,
-    @required this.password,
     @required this.id,
     @required this.image,
+    @required this.phoneNumber,
+  });
+  UserModel.loginModel({
+    @required this.email,
+    @required this.password,
+  });
+
+  UserModel.registerModel({
+    @required this.name,
+    @required this.email,
+    @required this.password,
     @required this.phoneNumber,
   });
 

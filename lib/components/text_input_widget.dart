@@ -7,16 +7,20 @@ class TextInputWidget extends StatelessWidget {
   var onClick;
   var onValidate;
   IconData icon;
+  TextEditingController textEditingController;
   TextInputWidget({
     @required this.message,
     @required this.icon,
     @required this.onClick,
     @required this.onValidate,
+    @required this.textEditingController,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      enabled: message == "Email" ? false : true,
+      controller: textEditingController,
       style: TextStyle(
         fontSize: 10.0,
         fontFamily: appFont,

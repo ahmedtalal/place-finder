@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:online_booking_places/bloc_services/auth_bloc/auth_bloc.dart';
 import 'package:online_booking_places/bloc_services/auth_bloc/auth_events.dart';
 import 'package:online_booking_places/bloc_services/auth_bloc/auth_states.dart';
-import 'package:online_booking_places/components/text_input_widget.dart';
+import 'package:online_booking_places/components/text_input_widget_copy.dart';
 import 'package:online_booking_places/constants.dart';
 import 'package:online_booking_places/models/user_model.dart';
 import 'package:online_booking_places/pages/auth_screen/login.dart';
 import 'package:online_booking_places/pages/home.dart';
-import 'package:uuid/uuid.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -25,6 +25,13 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Color.fromRGBO(143, 148, 251, 1),
+        statusBarIconBrightness: Brightness.light,
+        systemNavigationBarIconBrightness: Brightness.light,
+      ),
+    );
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     var provider = BlocProvider.of<AuthBloc>(context);
@@ -125,15 +132,13 @@ class _RegisterState extends State<Register> {
                                 return InkWell(
                                   onTap: () {
                                     setState(() {
-                                      var uId = Uuid();
                                       if (formKey.currentState.validate()) {
                                         isProgressed = true;
-                                        provider.model = UserModel(
+                                        provider.model =
+                                            UserModel.registerModel(
                                           name: name,
                                           email: email,
                                           password: password,
-                                          id: uId.v1(),
-                                          image: null,
                                           phoneNumber: phone.toString(),
                                         );
                                         provider.add(RegisterEvent());
@@ -188,7 +193,7 @@ class _RegisterState extends State<Register> {
                               Container(
                                 child: InkWell(
                                   onTap: () {
-                                    Navigator.of(context).push(
+                                    Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                         builder: (c) => Login(),
                                       ),
@@ -228,7 +233,7 @@ class _RegisterState extends State<Register> {
         Container(
           width: width * 0.8,
           height: height * 0.08,
-          child: TextInputWidget(
+          child: TextInputWidgetNoController(
             message: "Name",
             icon: Icons.person,
             onClick: (newValue) {
@@ -243,12 +248,12 @@ class _RegisterState extends State<Register> {
           ),
         ),
         SizedBox(
-          height: height * 0.02,
+          height: height * 0.01,
         ),
         Container(
           width: width * 0.8,
           height: height * 0.08,
-          child: TextInputWidget(
+          child: TextInputWidgetNoController(
             message: "email",
             icon: Icons.email,
             onClick: (newValue) {
@@ -263,12 +268,12 @@ class _RegisterState extends State<Register> {
           ),
         ),
         SizedBox(
-          height: height * 0.02,
+          height: height * 0.01,
         ),
         Container(
           width: width * 0.8,
           height: height * 0.08,
-          child: TextInputWidget(
+          child: TextInputWidgetNoController(
             message: "phone",
             icon: Icons.phone,
             onClick: (newValue) {
@@ -283,12 +288,12 @@ class _RegisterState extends State<Register> {
           ),
         ),
         SizedBox(
-          height: height * 0.02,
+          height: height * 0.01,
         ),
         Container(
           width: width * 0.8,
           height: height * 0.08,
-          child: TextInputWidget(
+          child: TextInputWidgetNoController(
             message: "Password",
             icon: Icons.lock,
             onClick: (newValue) {

@@ -3,4 +3,5 @@ abstract class AuthRepoModel {
   dynamic register(var model);
   dynamic logOut();
   dynamic checkCurrentUser();
+  dynamic updatePassword(var model);
 }

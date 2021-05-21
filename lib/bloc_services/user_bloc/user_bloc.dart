@@ -16,22 +16,30 @@ class UserBloc extends Bloc<UserEvents, UserStates> {
     if (event is GetUserEvent) {
       yield UserLoadingState();
       try {
-        var response = repositoryModel.getData(model);
+        var response = repositoryModel.getSpecialData(model);
         yield UserLoadedState(response: response);
       } catch (e) {
-        yield UserErrorState();
+        yield UserErrorState(error: e);
       }
     } else if (event is UpdateUserEvent) {
       yield UserLoadingState();
       try {
-        var response = repositoryModel.updateData(model);
+        var response = await repositoryModel.updateData(model);
         if (response == true) {
           yield UserUpdatedState();
         } else {
-          yield UserErrorState();
+          yield UserErrorState(error: "updating error");
         }
       } catch (e) {
-        yield UserErrorState();
+        yield UserErrorState(error: e);
+      }
+    } else if (event is FetchUsersEvent) {
+      yield UserLoadingState();
+      try {
+        var response = repositoryModel.getAllData(model);
+        yield UserLoadedState(response: response);
+      } catch (e) {
+        yield UserErrorState(error: e);
       }
     }
   }

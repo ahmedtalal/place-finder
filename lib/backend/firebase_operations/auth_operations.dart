@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:online_booking_places/backend/repository/auth_repository_model.dart';
 import 'package:online_booking_places/backend/repository/repository_model.dart';
+import 'package:online_booking_places/models/user_model.dart';
 
 class AuthOperations extends AuthRepoModel {
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -9,6 +10,7 @@ class AuthOperations extends AuthRepoModel {
   AuthOperations({
     @required this.repositoryModel,
   });
+  AuthOperations.instance();
   @override
   checkCurrentUser() {
     bool result = false;
@@ -22,14 +24,8 @@ class AuthOperations extends AuthRepoModel {
   }
 
   @override
-  logOut() {
-    bool result = false;
-    _auth.signOut().whenComplete(() {
-      result = true;
-    }).onError((error, stackTrace) {
-      result = false;
-    });
-    return result;
+  logOut() async {
+    await _auth.signOut();
   }
 
   @override
@@ -45,8 +41,22 @@ class AuthOperations extends AuthRepoModel {
     UserCredential credential = await _auth.createUserWithEmailAndPassword(
         email: model.email, password: model.password);
     if (credential != null) {
-      result = await repositoryModel.addData(model);
+      String userId = _auth.currentUser.uid;
+      UserModel userModel = UserModel(
+        name: model.name,
+        email: model.newPassword,
+        id: userId,
+        image: "null",
+        phoneNumber: model.phoneNumber,
+      );
+      result = await repositoryModel.addData(userModel);
     }
     return result;
+  }
+
+  @override
+  Future<void> updatePassword(model) async {
+    User user = FirebaseAuth.instance.currentUser;
+    await user.updatePassword(model);
   }
 }

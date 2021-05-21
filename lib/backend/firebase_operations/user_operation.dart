@@ -30,8 +30,8 @@ class UserOperation extends RepositoryModel {
   }
 
   @override
-  getData(model) {
-    DocumentReference docRef = _collRef.doc(model.id);
+  getSpecialData(model) {
+    DocumentReference docRef = _collRef.doc(model);
     return docRef.snapshots();
   }
 
@@ -47,4 +47,10 @@ class UserOperation extends RepositoryModel {
     });
     return result;
   }
+
+  @override
+  getAllData(model) {
+    return _collRef.snapshots();
+  }
+
 }

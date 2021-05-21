@@ -41,6 +41,11 @@ dependencies:
   url_launcher:
   share:
   image_picker:
+  bubble_bottom_bar:
+  carousel_pro:
+  firebase_analytics:
+  cached_network_image:
+  rating_bar:
 
 
 dev_dependencies:
@@ -65,6 +70,30 @@ flutter:
     - assets/images/clock.png
     - assets/images/light-1.png
     - assets/images/light-2.png
+    - assets/images/settings.png
+    - assets/images/home.png
+    - assets/images/favorites.png
+    - assets/images/user.png
+    - assets/images/logout.png
+    - assets/images/admin.png
+    - assets/images/group.png
+    - assets/images/adding.png
+    - assets/images/cinema.png
+    - assets/images/hotel.png
+    - assets/images/restaurant.png
+    - assets/images/location.jpg
+    - assets/images/rating.jpg
+    - assets/images/reservation.jpg
+    - assets/images/edit.png
+    - assets/images/changepassword.png
+    - assets/images/share.png
+    - assets/images/rate.png
+    - assets/images/cart.png
+    - assets/images/offer.png
+    - assets/images/logout1.png
+    - assets/images/emptysearch.png
+    
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
