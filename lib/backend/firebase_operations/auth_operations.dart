@@ -11,6 +11,7 @@ class AuthOperations extends AuthRepoModel {
     @required this.repositoryModel,
   });
   AuthOperations.instance();
+
   @override
   checkCurrentUser() {
     bool result = false;

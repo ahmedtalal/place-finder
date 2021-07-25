@@ -9,6 +9,8 @@ class ItemBloc extends Bloc<ItemEvents, ItemStates> {
   RepositoryModel repositoryModel;
   var model;
   var reviewModel;
+  var newModel;
+  var specilaModel;
   ItemBloc({
     @required this.repositoryModel,
   }) : super(InitialState());
@@ -34,6 +36,15 @@ class ItemBloc extends Bloc<ItemEvents, ItemStates> {
       } catch (e) {
         yield ItemsFailedState();
       }
+    } else if (event is FetchSpecialItemEvents) {
+      yield ItemsLoadingState();
+      try {
+        var result = repositoryModel.getSpecialData(specilaModel);
+        print("result ${result.length}");
+        yield SpecialItemsLoadedState(response: result);
+      } catch (e) {
+        yield ItemsFailedState();
+      }
     } else if (event is FetchOffersEvent) {
       yield OffersLoadingState();
       try {
@@ -41,6 +52,28 @@ class ItemBloc extends Bloc<ItemEvents, ItemStates> {
         yield OffersLoadedState(response: result);
       } catch (e) {
         yield OffersFailedState();
+      }
+    } else if (event is UpdateItemEvent) {
+      try {
+        var response = repositoryModel.updateData(newModel);
+        if (response == true) {
+          yield UpdateSuccessed();
+        } else {
+          yield UpdatedFailed();
+        }
+      } catch (e) {
+        yield UpdatedFailed();
+      }
+    } else if (event is DeleteItemEvent) {
+      try {
+        var response = repositoryModel.deleteData(newModel);
+        if (response == true) {
+          yield DeletedSuccessed();
+        } else {
+          yield DeletedFailed();
+        }
+      } catch (e) {
+        yield DeletedFailed();
       }
     }
   }

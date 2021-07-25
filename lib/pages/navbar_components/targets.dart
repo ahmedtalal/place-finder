@@ -3,6 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:online_booking_places/bloc_services/cart_bloc/cart_bloc.dart';
+import 'package:online_booking_places/bloc_services/cart_bloc/cart_events.dart';
+import 'package:online_booking_places/bloc_services/cart_bloc/cart_states.dart';
 import 'package:online_booking_places/bloc_services/product_bloc/item_bloc.dart';
 import 'package:online_booking_places/bloc_services/product_bloc/item_events.dart';
 import 'package:online_booking_places/bloc_services/product_bloc/item_states.dart';
@@ -11,6 +14,8 @@ import 'package:online_booking_places/bloc_services/user_bloc/user_events.dart';
 import 'package:online_booking_places/bloc_services/user_bloc/user_states.dart';
 import 'package:online_booking_places/components/item_view.dart';
 import 'package:online_booking_places/constants.dart';
+import 'package:online_booking_places/pages/cart.dart';
+import 'package:badges/badges.dart';
 
 class Targets extends StatefulWidget {
   @override
@@ -25,6 +30,8 @@ class _TargetsState extends State<Targets> {
     userProvider.model = FirebaseAuth.instance.currentUser.uid;
     userProvider.add(GetUserEvent());
     var itemProvider = BlocProvider.of<ItemBloc>(context);
+    var cartProvider = BlocProvider.of<CartBloc>(context);
+    cartProvider.add(FetchItemsFromCart());
 
     return DefaultTabController(
       length: 3,
@@ -97,13 +104,57 @@ class _TargetsState extends State<Targets> {
               ],
             ),
             actions: [
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.shopping_cart,
-                  size: 20.0,
-                  color: Colors.red,
-                ),
+              BlocBuilder<CartBloc, CartStates>(
+                builder: (context, state) {
+                  var result;
+                  if (state is ItemsCartLoadingState) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is ItemsCartLoadedState) {
+                    result = state.response;
+                  }
+                  return StreamBuilder<QuerySnapshot>(
+                    stream: result,
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        List items = [];
+                        snapshot.data.docs.forEach((DocumentSnapshot element) {
+                          items.add(element.data());
+                        });
+                        return Container(
+                          margin: const EdgeInsets.only(top: 15, right: 25),
+                          child: Badge(
+                            badgeContent: Text(
+                              "${items.length}",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            child: IconButton(
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => Cart(),
+                                  ),
+                                );
+                              },
+                              icon: Icon(
+                                Icons.shopping_cart,
+                                size: 27.0,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                  );
+                },
               ),
             ],
             bottom: TabBar(
@@ -190,20 +241,6 @@ class _TargetsState extends State<Targets> {
                 SizedBox(
                   height: 10.0,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Restaurants",
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      fontFamily: appFont,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
                 BlocBuilder<ItemBloc, ItemStates>(
                   builder: (context, state) {
                     itemProvider.model = "Rastaurants";
@@ -264,7 +301,7 @@ class _TargetsState extends State<Targets> {
                       },
                     );
                   },
-                )
+                ),
               ],
             ),
             Column(
@@ -273,20 +310,6 @@ class _TargetsState extends State<Targets> {
               children: [
                 SizedBox(
                   height: 10.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Cinemas",
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      fontFamily: appFont,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 5.0,
                 ),
                 BlocBuilder<ItemBloc, ItemStates>(
                   builder: (context, state) {
@@ -310,7 +333,7 @@ class _TargetsState extends State<Targets> {
                                 height: height * 0.3,
                               ),
                               Text(
-                                "No posts at this time",
+                                "No items at this time",
                                 style: TextStyle(
                                   fontFamily: appFont,
                                   fontSize: 15.0,
@@ -358,20 +381,6 @@ class _TargetsState extends State<Targets> {
                 SizedBox(
                   height: 10.0,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Hotels",
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      fontFamily: appFont,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
                 BlocBuilder<ItemBloc, ItemStates>(
                   builder: (context, state) {
                     itemProvider.model = "Hotels";
@@ -394,7 +403,7 @@ class _TargetsState extends State<Targets> {
                                 height: height * 0.3,
                               ),
                               Text(
-                                "No posts at this time",
+                                "No items at this time",
                                 style: TextStyle(
                                   fontFamily: appFont,
                                   fontSize: 15.0,

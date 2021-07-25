@@ -24,7 +24,13 @@ class ItemOperations extends RepositoryModel {
 
   @override
   deleteData(model) {
-    throw UnimplementedError();
+    bool result = false;
+    CollectionReference collRef = _store.collection(model.type);
+    DocumentReference docRef = collRef.doc(model.id);
+    docRef.delete().whenComplete(() {
+      result = true;
+    });
+    return result;
   }
 
   @override
@@ -35,12 +41,26 @@ class ItemOperations extends RepositoryModel {
 
   @override
   getSpecialData(model) {
-    throw UnimplementedError();
+    List items = [];
+    model.forEach((element) {
+      CollectionReference collRef = _store.collection(element["type"]);
+      DocumentReference docRef = collRef.doc(element["itemId"]);
+      items.add(docRef.snapshots());
+    });
+    print("object ${items.length}");
+    return items;
   }
 
   @override
   updateData(model) {
-    throw UnimplementedError();
+    bool result = false;
+    CollectionReference collRef = _store.collection(model.type);
+    DocumentReference docRef = collRef.doc(model.id);
+    Map<String, dynamic> data = TargetModel.toJson(model);
+    docRef.update(data).whenComplete(() {
+      result = true;
+    });
+    return result;
   }
 
   getAllReviews(var model) {

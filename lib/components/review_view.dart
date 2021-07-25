@@ -21,8 +21,8 @@ class ReviewsView extends StatelessWidget {
     userProvider.model = data["userId"];
     userProvider.add(GetUserEvent());
 
-    return Container(
-      height: height * 0.2,
+    return Card(
+      elevation: 5.0,
       child: BlocBuilder<UserBloc, UserStates>(
         builder: (context, state) {
           var result;
@@ -42,75 +42,76 @@ class ReviewsView extends StatelessWidget {
                 name = snapshot.data["name"];
                 image = snapshot.data["image"];
               }
-              return Card(
-                elevation: 3.0,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: height * 0.15,
-                      width: 90.0,
-                      margin: EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: CachedNetworkImage(
-                        fit: BoxFit.cover,
-                        imageUrl: image,
-                        placeholder: (context, url) =>
-                            CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Image(
-                          image: AssetImage(userImage),
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(500.0),
+                        ),
+                        child: ClipOval(
+                          child: CachedNetworkImage(
+                            height: 50,
+                            width: 50,
+                            fit: BoxFit.cover,
+                            imageUrl: image,
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) => Image(
+                              image: AssetImage(userImage),
+                            ),
+                          ),
                         ),
                       ),
+                      Text(
+                        name,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontFamily: appFont,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 5.0,
+                      left: 12.0,
+                      right: 12.0,
+                      bottom: 8.0,
                     ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            name,
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              fontFamily: appFont,
-                              color: Colors.black,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5.0,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              data["message"],
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                fontFamily: appFont,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
-                          RatingBar.readOnly(
-                            initialRating: data["rating"],
-                            filledIcon: Icons.favorite,
-                            emptyIcon: Icons.favorite_border,
-                            halfFilledIcon: Icons.favorite_border,
-                            isHalfAllowed: true,
-                            filledColor: Colors.amberAccent,
-                            emptyColor: Colors.grey,
-                            halfFilledColor: Colors.amberAccent,
-                            size: 16.0,
-                          ),
-                        ],
+                    child: Text(
+                      data["message"],
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontFamily: appFont,
+                        color: Colors.black,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    width: 5.0,
+                  ),
+                  RatingBar.readOnly(
+                    initialRating: data["rating"],
+                    filledIcon: Icons.favorite,
+                    emptyIcon: Icons.favorite_border,
+                    halfFilledIcon: Icons.favorite_border,
+                    isHalfAllowed: true,
+                    filledColor: Colors.amberAccent,
+                    emptyColor: Colors.grey,
+                    halfFilledColor: Colors.amberAccent,
+                    size: 18.0,
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                ],
               );
             },
           );

@@ -17,6 +17,13 @@ class ItemsLoadedState extends ItemStates {
   });
 }
 
+class SpecialItemsLoadedState extends ItemStates {
+  var response;
+  SpecialItemsLoadedState({
+    @required this.response,
+  });
+}
+
 class ItemsFailedState extends ItemStates {}
 
 class OffersLoadingState extends ItemStates {}
@@ -29,3 +36,11 @@ class OffersLoadedState extends ItemStates {
 }
 
 class OffersFailedState extends ItemStates {}
+
+class UpdateSuccessed extends ItemStates {}
+
+class UpdatedFailed extends ItemStates {}
+
+class DeletedSuccessed extends ItemStates {}
+
+class DeletedFailed extends ItemStates {}

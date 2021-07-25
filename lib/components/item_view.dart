@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:online_booking_places/constants.dart';
 import 'package:online_booking_places/pages/navbar_components/item_info_details.dart';
+import 'package:online_booking_places/pages/navbar_components/item_info_details_admin.dart';
 import 'package:rating_bar/rating_bar.dart';
 
 // ignore: must_be_immutable
@@ -12,13 +14,23 @@ class ItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (c) => ItemInfoDetails(
-              item: targetMap,
+        if (FirebaseAuth.instance.currentUser.email == "admin@gmail.com") {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (c) => ItemInfoDetailsAmin(
+                item: targetMap,
+              ),
             ),
-          ),
-        );
+          );
+        } else {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (c) => ItemInfoDetails(
+                item: targetMap,
+              ),
+            ),
+          );
+        }
       },
       child: Card(
         elevation: 3.0,
@@ -38,7 +50,8 @@ class ItemView extends StatelessWidget {
                   width: 90.0,
                   fit: BoxFit.fill,
                   imageUrl: targetMap["image"],
-                  placeholder: (context, url) => CircularProgressIndicator(),
+                  placeholder: (context, url) =>
+                      Center(child: CircularProgressIndicator()),
                   errorWidget: (context, url, error) => Image(
                     image: AssetImage(emptyData),
                   ),

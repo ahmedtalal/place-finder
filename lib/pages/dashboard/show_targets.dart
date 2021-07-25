@@ -27,6 +27,7 @@ class _ShowTargetsState extends State<ShowTargets> {
     itemProvider.add(FetchItemsEvent());
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(10.0),

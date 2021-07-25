@@ -1,47 +1,26 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:online_booking_places/bloc_services/cart_bloc/cart_bloc.dart';
-import 'package:online_booking_places/bloc_services/cart_bloc/cart_events.dart';
-import 'package:online_booking_places/bloc_services/cart_bloc/cart_states.dart';
-import 'package:online_booking_places/bloc_services/favorite_bloc/favorite_bloc.dart';
-import 'package:online_booking_places/bloc_services/favorite_bloc/favorite_events.dart';
-import 'package:online_booking_places/bloc_services/favorite_bloc/favorite_states.dart';
 import 'package:online_booking_places/components/action_widget.dart';
 import 'package:online_booking_places/constants.dart';
-import 'package:online_booking_places/models/cart_model.dart';
-import 'package:online_booking_places/models/target_model.dart';
-import 'package:online_booking_places/pages/cart.dart';
-import 'package:online_booking_places/pages/home.dart';
+import 'package:online_booking_places/pages/dashboard/modify_item.dart';
 import 'package:online_booking_places/pages/reviews.dart';
 import 'package:rating_bar/rating_bar.dart';
-import 'package:uuid/uuid.dart';
 
 // ignore: must_be_immutable
-class ItemInfoDetails extends StatefulWidget {
+class ItemInfoDetailsAmin extends StatefulWidget {
   Map<String, dynamic> item;
-  ItemInfoDetails({
+  ItemInfoDetailsAmin({
     @required this.item,
   });
   @override
-  _ItemInfoDetailsState createState() => _ItemInfoDetailsState();
+  _ItemInfoDetailsAminState createState() => _ItemInfoDetailsAminState();
 }
 
-class _ItemInfoDetailsState extends State<ItemInfoDetails> {
-  bool isFavorite = false;
-
+class _ItemInfoDetailsAminState extends State<ItemInfoDetailsAmin> {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    var favProvider = BlocProvider.of<FavoriteBloc>(context);
-    favProvider.itemId = TargetModel.obj2(
-      id: widget.item["id"],
-      type: widget.item["type"],
-    );
-    favProvider.add(IsFavoriteEvent());
-    var cartProvider = BlocProvider.of<CartBloc>(context);
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -60,7 +39,7 @@ class _ItemInfoDetailsState extends State<ItemInfoDetails> {
                 children: [
                   ActionWidget(
                     onClick: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pop(context);
                     },
                     icon: Icons.arrow_back_ios_rounded,
                   ),
@@ -78,36 +57,9 @@ class _ItemInfoDetailsState extends State<ItemInfoDetails> {
                       SizedBox(
                         width: 8.0,
                       ),
-                      BlocListener<FavoriteBloc, FavoriteStates>(
-                        listener: (context, state) {
-                          if (state is AddFavSucessState) {
-                            snackbarValidate(state.response, context);
-                          } else if (state is DeleteFavSucessState) {
-                            snackbarValidate(state.response, context);
-                          } else if (state is FavClickFailedState) {
-                            snackbarValidate("favorite action failed", context);
-                          } else if (state is FavState) {
-                            isFavorite = true;
-                          } else if (state is UnFavState) {
-                            isFavorite = false;
-                          }
-                        },
-                        child: BlocBuilder<FavoriteBloc, FavoriteStates>(
-                          builder: (context, state) {
-                            return ActionWidget(
-                              onClick: () {
-                                favProvider.itemId = TargetModel.obj2(
-                                  id: widget.item["id"],
-                                  type: widget.item["type"],
-                                );
-                                favProvider.add(FavClickEvent());
-                              },
-                              icon: isFavorite == true
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                            );
-                          },
-                        ),
+                      ActionWidget(
+                        onClick: () {},
+                        icon: Icons.favorite_border,
                       ),
                     ],
                   ),
@@ -372,50 +324,33 @@ class _ItemInfoDetailsState extends State<ItemInfoDetails> {
                             ),
                           ),
                         ),
-                        BlocListener<CartBloc, CartStates>(
-                          listener: (context, state) {
-                            if (state is CartAddedSuccessfullyState) {
-                              snackbarValidate("added", context);
-                            } else if (state is CartAddedFailedState) {
-                              snackbarValidate("failed", context);
-                            }
-                          },
-                          child: BlocBuilder<CartBloc, CartStates>(
-                            builder: (context, state) {
-                              return InkWell(
-                                onTap: () {
-                                  var id = Uuid().v1();
-                                  cartProvider.dataModel = CartModel(
-                                    itemId: widget.item["id"],
-                                    itemImage: widget.item["image"],
-                                    itemName: widget.item["name"],
-                                    itemCartId: id,
-                                    price: widget.item["price"],
-                                    newPrice: 0.0,
-                                    quantity: 0,
-                                  );
-                                  cartProvider.add(AddItemTOCart());
-                                },
-                                child: Container(
-                                  width: width * 0.4,
-                                  height: height * 0.063,
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue[300],
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      "Book Now",
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontFamily: appFont,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (C) => ModifyItem(
+                                  itemData: widget.item,
                                 ),
-                              );
-                            },
+                              ),
+                            );
+                          },
+                          child: Container(
+                            width: width * 0.4,
+                            height: height * 0.063,
+                            decoration: BoxDecoration(
+                              color: Colors.blue[300],
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Modify",
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  fontFamily: appFont,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -425,16 +360,6 @@ class _ItemInfoDetailsState extends State<ItemInfoDetails> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  void snackbarValidate(String s, BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          s,
         ),
       ),
     );

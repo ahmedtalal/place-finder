@@ -42,6 +42,7 @@ const String myCartImage = "assets/images/cart.png";
 const String offersImage = "assets/images/offer.png";
 const String logoutmage = "assets/images/logout1.png";
 const String emptyData = "assets/images/emptysearch.png";
+const String checkOrder = "assets/images/checklist.png";
 
 bool validatePhoneNubmer(String number) {
   if (number.isEmpty) {

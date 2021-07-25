@@ -11,8 +11,10 @@ import 'package:online_booking_places/bloc_services/user_bloc/user_states.dart';
 import 'package:online_booking_places/components/setting_components_view.dart';
 import 'package:online_booking_places/constants.dart';
 import 'package:online_booking_places/pages/auth_screen/register.dart';
+import 'package:online_booking_places/pages/cart.dart';
 import 'package:online_booking_places/pages/setting_page_components/edit_profile.dart';
 import 'package:online_booking_places/pages/setting_page_components/offers.dart';
+import 'package:online_booking_places/pages/setting_page_components/old_orders.dart';
 import 'package:online_booking_places/pages/setting_page_components/update_password.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -237,7 +239,13 @@ class _SettingsState extends State<Settings> {
                 height: 10.0,
               ),
               SettingComponentsView(
-                onClick: () {},
+                onClick: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Cart(),
+                    ),
+                  );
+                },
                 hint: "My Cart",
                 icon: myCartImage,
                 color: Colors.red[500],
@@ -256,6 +264,21 @@ class _SettingsState extends State<Settings> {
                 hint: "Offers",
                 icon: offersImage,
                 color: Colors.orange[500],
+              ),
+              SizedBox(
+                height: 6.0,
+              ),
+              SettingComponentsView(
+                onClick: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => OldOrders(),
+                    ),
+                  );
+                },
+                hint: "My Orders",
+                icon: checkOrder,
+                color: Colors.cyan[500],
               ),
               SizedBox(
                 height: 6.0,

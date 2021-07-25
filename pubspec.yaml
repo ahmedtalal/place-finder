@@ -46,6 +46,7 @@ dependencies:
   firebase_analytics:
   cached_network_image:
   rating_bar:
+  badges:
 
 
 dev_dependencies:
@@ -92,6 +93,7 @@ flutter:
     - assets/images/offer.png
     - assets/images/logout1.png
     - assets/images/emptysearch.png
+    - assets/images/checklist.png
     
     
 

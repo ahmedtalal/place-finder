@@ -19,6 +19,7 @@ class TextInputWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLines: message == "description" ? 8 : 1,
       enabled: message == "Email" ? false : true,
       controller: textEditingController,
       style: TextStyle(

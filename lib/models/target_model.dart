@@ -29,6 +29,11 @@ class TargetModel {
     @required this.placePhone,
   });
 
+  TargetModel.obj2({
+    @required this.id,
+    @required this.type,
+  });
+
   TargetModel.fromJson(Map<String, dynamic> data) {
     this.name = data["name"];
     this.type = data["type"];
