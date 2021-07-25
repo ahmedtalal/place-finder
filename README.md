@@ -1,7 +1,8 @@
 # online_booking_places
 
 A new Flutter application.
-
+The application is for finding places like Restaurants, Hotels and Cinemas based on
+the user choice, also contains information about the place you choose
 ## Getting Started
 
 This project is a starting point for a Flutter application.
