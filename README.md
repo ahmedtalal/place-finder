@@ -15,12 +15,11 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
-<img src="assets/appimages/Screenshot_20210728-213800.jpg" width="100" height="100">
-![](assets/appimages/Screenshot_20210728-213812.jpg)
-![](assets/appimages/Screenshot_20210728-213812.jpg)
-![](assets/appimages/Screenshot_20210728-213902.jpg)
-![](assets/appimages/Screenshot_20210728-214008.jpg)
-![](assets/appimages/Screenshot_20210728-214017.jpg)
-![](assets/appimages/Screenshot_20210728-214036.jpg)
-![](assets/appimages/Screenshot_20210728-214053.jpg)
-![](assets/appimages/Screenshot_20210728-214102.jpg)
+<img src="assets/appimages/Screenshot_20210728-213800.jpg" width="400" height="400">
+<img src="assets/appimages/Screenshot_20210728-213812.jpg" width="400" height="400">
+<img src="assets/appimages/Screenshot_20210728-213902.jpg" width="400" height="400">
+<img src="assets/appimages/Screenshot_20210728-214008.jpg" width="400" height="400">
+<img src="assets/appimages/Screenshot_20210728-214017.jpg" width="400" height="400">
+<img src="assets/appimages/Screenshot_20210728-214036.jpg" width="400" height="400">
+<img src="assets/appimages/Screenshot_20210728-214053.jpg" width="400" height="400">
+<img src="assets/appimages/Screenshot_20210728-214102.jpg" width="400" height="400">
