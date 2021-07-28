@@ -6,10 +6,12 @@ import 'package:online_booking_places/backend/firebase_operations/auth_operation
 import 'package:online_booking_places/backend/firebase_operations/cart_operations.dart';
 import 'package:online_booking_places/backend/firebase_operations/favorite_operations.dart';
 import 'package:online_booking_places/backend/firebase_operations/item_operations.dart';
+import 'package:online_booking_places/backend/firebase_operations/order_operations.dart';
 import 'package:online_booking_places/backend/firebase_operations/user_operation.dart';
 import 'package:online_booking_places/bloc_services/auth_bloc/auth_bloc.dart';
 import 'package:online_booking_places/bloc_services/cart_bloc/cart_bloc.dart';
 import 'package:online_booking_places/bloc_services/favorite_bloc/favorite_bloc.dart';
+import 'package:online_booking_places/bloc_services/order_bloc/order_bloc.dart';
 import 'package:online_booking_places/bloc_services/product_bloc/item_bloc.dart';
 import 'package:online_booking_places/bloc_services/reviews_bloc/reviews_bloc.dart';
 import 'package:online_booking_places/bloc_services/user_bloc/user_bloc.dart';

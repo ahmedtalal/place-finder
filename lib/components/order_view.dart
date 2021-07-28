@@ -88,7 +88,7 @@ class OrderView extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: appFont,
                         fontSize: 16.0,
-                        color: Colors.blue,
+                        color: Colors.redAccent,
                         decoration: TextDecoration.underline,
                         decorationStyle: TextDecorationStyle.double,
                         decorationColor: Colors.red,
